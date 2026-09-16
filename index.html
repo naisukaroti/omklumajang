@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Swiper.js CSS untuk Slide Foto Lancar Ala IG -->
+  <!-- Swiper.js CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   
   <style>
@@ -19,16 +19,22 @@
     }
     .bg-omk-green { background-color: #1b3b2b; }
     
-    /* Custom style untuk Swiper slider */
+    /* Style Swiper agar menyesuaikan tinggi gambar secara otomatis (Auto Height) */
+    .swiper-slide {
+      height: auto !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .swiper-button-next, .swiper-button-prev {
       color: #ffffff !important;
       background: rgba(0,0,0,0.4);
-      width: 30px !important;
-      height: 30px !important;
+      width: 32px !important;
+      height: 32px !important;
       border-radius: 50%;
     }
     .swiper-button-next::after, .swiper-button-prev::after {
-      font-size: 12px !important;
+      font-size: 13px !important;
       font-weight: bold;
     }
     .swiper-pagination-bullet-active {
@@ -42,7 +48,6 @@
   <header class="bg-omk-green text-white sticky top-0 z-40 shadow-md">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
       
-      <!-- Logo & Title Section -->
       <div class="flex items-center gap-2 min-w-0 flex-1">
         <div class="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-white rounded-full p-0.5 shadow">
           <img id="navLogoImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23f4f1ea' stroke='%231b3b2b' stroke-width='4'/><text x='50' y='55' font-size='22' text-anchor='middle' fill='%231b3b2b' font-weight='bold'>OMK</text></svg>" alt="Logo OMK" class="w-full h-full object-cover rounded-full">
@@ -53,7 +58,6 @@
         </div>
       </div>
 
-      <!-- Navigation & Action Buttons -->
       <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
         <nav class="flex bg-emerald-950/60 p-1 rounded-xl text-xs">
           <button id="btnTabGallery" onclick="switchTab('gallery')" class="px-2.5 py-1.5 rounded-lg font-medium transition bg-amber-400 text-emerald-950 font-semibold shadow">
@@ -64,7 +68,6 @@
           </button>
         </nav>
 
-        <!-- Admin Lock Button -->
         <button id="btnAdminTrigger" onclick="openAdminAuth()" class="p-2 bg-emerald-900 hover:bg-emerald-800 text-amber-300 rounded-xl transition border border-emerald-700/50 flex items-center gap-1 text-xs font-semibold" title="Akses Admin HP">
           <i id="adminLockIcon" class="fa-solid fa-lock text-sm"></i>
           <span id="adminStatusText" class="hidden md:inline">Admin</span>
@@ -93,7 +96,6 @@
         </div>
       </div>
 
-      <!-- Form Unggah Postingan (Carousel) -->
       <form id="uploadForm" onsubmit="handlePostUpload(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pilih Beberapa Foto/Video Sekaligus</label>
@@ -130,10 +132,10 @@
       </form>
     </div>
 
-    <!-- TAB 1: GALERI / BERANDA POSTINGAN -->
+    <!-- TAB 1: GALERI -->
     <div id="sectionGallery" class="space-y-6">
       
-      <!-- HERO BANNER DOKUMENTASI OMK -->
+      <!-- HERO BANNER -->
       <div class="bg-gradient-to-br from-emerald-900 via-emerald-950 to-emerald-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-emerald-800/50 relative overflow-hidden">
         <div class="relative z-10 space-y-3">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold">
@@ -163,10 +165,8 @@
         </div>
       </div>
 
-      <!-- FEED POSTINGAN IG STYLE -->
-      <div id="postsFeed" class="space-y-6">
-        <!-- Post Items Akan Di-render Oleh JS -->
-      </div>
+      <!-- FEED POSTINGAN -->
+      <div id="postsFeed" class="space-y-6"></div>
 
       <!-- Empty State -->
       <div id="emptyState" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
@@ -177,8 +177,6 @@
 
     <!-- TAB 2: KISAH LENGKAP ST. IGNATIUS DE LOYOLA -->
     <div id="sectionIgnatius" class="hidden space-y-6">
-      
-      <!-- Banner Utama Santo Pelindung -->
       <div class="bg-gradient-to-br from-amber-900 via-amber-950 to-emerald-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-800/40">
         <span class="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold mb-3">
           <i class="fa-solid fa-shield-halved mr-1"></i> Santo Pelindung OMK
@@ -189,9 +187,7 @@
         </p>
       </div>
 
-      <!-- Sejarah Lengkap Perjalanan Hidup -->
       <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6 text-xs sm:text-sm text-gray-700 leading-relaxed">
-        
         <div class="border-b border-gray-100 pb-4">
           <h3 class="text-base sm:text-lg font-bold text-emerald-950 flex items-center gap-2">
             <i class="fa-solid fa-book-bible text-amber-600"></i> Sejarah & Perjalanan Hidup Lengkap
@@ -199,7 +195,6 @@
           <p class="text-gray-500 text-xs mt-1">Mengenal lebih dekat sosok teladan dan perintis spiritualitas Ignasian.</p>
         </div>
 
-        <!-- Bab 1 -->
         <div class="space-y-2">
           <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2">
             <span class="w-6 h-6 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-xs">1</span>
@@ -210,7 +205,6 @@
           </p>
         </div>
 
-        <!-- Bab 2 -->
         <div class="space-y-2">
           <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2">
             <span class="w-6 h-6 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-xs">2</span>
@@ -224,7 +218,6 @@
           </p>
         </div>
 
-        <!-- Bab 3 -->
         <div class="space-y-2">
           <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2">
             <span class="w-6 h-6 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-xs">3</span>
@@ -238,7 +231,6 @@
           </p>
         </div>
 
-        <!-- Bab 4 -->
         <div class="space-y-2">
           <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2">
             <span class="w-6 h-6 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-xs">4</span>
@@ -252,7 +244,6 @@
           </p>
         </div>
 
-        <!-- Bab 5 -->
         <div class="space-y-2">
           <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2">
             <span class="w-6 h-6 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-xs">5</span>
@@ -263,20 +254,17 @@
           </p>
         </div>
 
-        <!-- Semboyan -->
         <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-1 mt-4">
           <p class="font-bold text-amber-950 text-xs uppercase tracking-wider">Semboyan Utama Spiritualitas Ignasian:</p>
           <p class="text-sm font-extrabold text-amber-900">"Ad Maiorem Dei Gloriam" (AMDG)</p>
           <p class="text-xs text-gray-600">Artinya: <i>"Demi Kemuliaan Allah yang Lebih Besar"</i>. Prinsip inilah yang menginspirasi Orang Muda Katolik (OMK) untuk memberikan yang terbaik dalam setiap karya dan pelayanan sehari-hari.</p>
         </div>
-
       </div>
-
     </div>
 
   </main>
 
-  <!-- MODAL LOGIN ADMIN (PIN: 317) -->
+  <!-- MODAL LOGIN ADMIN -->
   <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative">
       <button onclick="closeAdminAuth()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
@@ -336,7 +324,6 @@
     let isAdminLoggedIn = false;
     let db;
 
-    // INITIALIZE INDEXEDDB
     function initDB() {
       const request = indexedDB.open("OMKSwiperPostsDB_v2", 1);
       request.onupgradeneeded = function(e) {
@@ -351,7 +338,6 @@
       };
     }
 
-    // TAB SWITCHING
     function switchTab(tab) {
       const secGallery = document.getElementById('sectionGallery');
       const secIgnatius = document.getElementById('sectionIgnatius');
@@ -371,7 +357,6 @@
       }
     }
 
-    // ADMIN AUTH
     function openAdminAuth() {
       if (isAdminLoggedIn) {
         document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
@@ -407,7 +392,6 @@
       loadPostsList();
     }
 
-    // UNGGAH MULTI-FOTO UNTUK 1 POSTINGAN
     function handlePostUpload(e) {
       e.preventDefault();
       if (!db) return;
@@ -457,7 +441,6 @@
       }
     }
 
-    // LOAD POSTS LIST
     function loadPostsList() {
       if (!db) return;
       const tx = db.transaction("posts", "readonly");
@@ -470,7 +453,7 @@
       };
     }
 
-    // RENDER FEED POSTINGAN DENGAN SWIPER SLIDER
+    // RENDER FEED DENGAN AUTOHIETAING & ASPEK RASIO ASLI FOTO
     function renderPostsFeed(posts) {
       const feed = document.getElementById('postsFeed');
       const emptyState = document.getElementById('emptyState');
@@ -488,18 +471,18 @@
 
         const totalMedia = post.media.length;
 
-        // Render Slides
+        // Render Slides tanpa memotong rasio asli foto
         let slidesHtml = "";
         post.media.forEach(item => {
           if (item.type === 'video') {
             slidesHtml += `
-              <div class="swiper-slide bg-black flex items-center justify-center">
-                <video src="${item.src}" controls class="w-full h-auto max-h-[480px] object-contain"></video>
+              <div class="swiper-slide bg-black">
+                <video src="${item.src}" controls class="w-full h-auto block"></video>
               </div>`;
           } else {
             slidesHtml += `
-              <div class="swiper-slide bg-gray-100 flex items-center justify-center">
-                <img src="${item.src}" alt="${post.title}" class="w-full h-auto max-h-[480px] object-cover">
+              <div class="swiper-slide bg-gray-50">
+                <img src="${item.src}" alt="${post.title}" class="w-full h-auto block object-contain">
               </div>`;
           }
         });
@@ -548,34 +531,34 @@
 
         feed.appendChild(card);
 
-        // Inisialisasi Swiper jika foto lebih dari 1
-        if (totalMedia > 1) {
-          setTimeout(() => {
-            new Swiper(`.mySwiper-${post.id}`, {
-              pagination: {
-                el: `.mySwiper-${post.id} .swiper-pagination`,
-                clickable: true,
-              },
-              navigation: {
-                nextEl: `.mySwiper-${post.id} .swiper-button-next`,
-                prevEl: `.mySwiper-${post.id} .swiper-button-prev`,
-              },
-              on: {
-                slideChange: function () {
-                  const counter = document.getElementById(`counter-${post.id}`);
-                  if (counter) {
-                    counter.innerHTML = `<i class="fa-solid fa-layer-group"></i> ${this.activeIndex + 1}/${totalMedia}`;
-                  }
+        // Inisialisasi Swiper dengan autoHeight: true agar kontainer mengikuti tinggi foto asli
+        setTimeout(() => {
+          new Swiper(`.mySwiper-${post.id}`, {
+            autoHeight: true, // Otomatis menyesuaikan tinggi foto secara sempurna
+            spaceBetween: 0,
+            pagination: {
+              el: `.mySwiper-${post.id} .swiper-pagination`,
+              clickable: true,
+            },
+            navigation: {
+              nextEl: `.mySwiper-${post.id} .swiper-button-next`,
+              prevEl: `.mySwiper-${post.id} .swiper-button-prev`,
+            },
+            on: {
+              slideChange: function () {
+                const counter = document.getElementById(`counter-${post.id}`);
+                if (counter && totalMedia > 1) {
+                  counter.innerHTML = `<i class="fa-solid fa-layer-group"></i> ${this.activeIndex + 1}/${totalMedia}`;
                 }
               }
-            });
-          }, 100);
-        }
+            }
+          });
+        }, 100);
       });
     }
 
     function deletePost(id) {
-      if (!confirm("Apakah Anda yakin ingin menghapus postingan ini beserta seluruh fotonya?")) return;
+      if (!confirm("Apakah Anda yakin ingin menghapus postingan ini?")) return;
       const tx = db.transaction("posts", "readwrite");
       tx.objectStore("posts").delete(id);
       tx.oncomplete = function() {
@@ -583,7 +566,6 @@
       };
     }
 
-    // LOGO CUSTOMIZATION
     function openLogoUploadModal() {
       document.getElementById('logoModal').classList.remove('hidden');
     }
@@ -613,7 +595,6 @@
       }
     }
 
-    // FILTER FUNCTION
     function setFilter(cat) {
       if (!db) return;
       const tx = db.transaction("posts", "readonly");
@@ -643,7 +624,6 @@
       };
     }
 
-    // INIT ON LOAD
     window.onload = function() {
       initDB();
       applyCustomLogo();
