@@ -50,7 +50,7 @@
       
       <div class="flex items-center gap-2 min-w-0 flex-1">
         <div class="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-white rounded-full p-0.5 shadow">
-          <img id="navLogoImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23f4f1ea' stroke='%231b3b2b' stroke-width='4'/><text x='50' y='55' font-size='22' text-anchor='middle' fill='%231b3b2b' font-weight='bold'>OMK</text></svg>" alt="Logo OMK" class="w-full h-full object-cover rounded-full">
+          <img id="navLogoImg" src="logo.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'%23f4f1ea\' stroke=\'%231b3b2b\' stroke-width=\'4\'/><text x=\'50\' y=\'55\' font-size=\'22\' text-anchor=\'middle\' fill=\'%231b3b2b\' font-weight=\'bold\'>OMK</text></svg>'" alt="Logo OMK" class="w-full h-full object-cover rounded-full">
         </div>
         <div class="min-w-0 leading-tight">
           <h1 class="text-xs sm:text-base font-bold text-amber-200 truncate">OMK St. Ignatius De Loyola</h1>
@@ -67,70 +67,12 @@
             <i class="fa-solid fa-cross mr-1"></i><span>Santo Ignatius</span>
           </button>
         </nav>
-
-        <button id="btnAdminTrigger" onclick="openAdminAuth()" class="p-2 bg-emerald-900 hover:bg-emerald-800 text-amber-300 rounded-xl transition border border-emerald-700/50 flex items-center gap-1 text-xs font-semibold" title="Akses Admin HP">
-          <i id="adminLockIcon" class="fa-solid fa-lock text-sm"></i>
-          <span id="adminStatusText" class="hidden md:inline">Admin</span>
-        </button>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTAINER -->
   <main class="flex-grow max-w-2xl w-full mx-auto px-3 sm:px-4 py-6">
-
-    <!-- ADMIN CONTROL PANEL -->
-    <div id="adminPanel" class="hidden mb-8 bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-6 shadow-lg">
-      <div class="flex items-center justify-between border-b border-amber-200 pb-3 mb-4">
-        <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider">Mode Admin HP</span>
-          <h2 class="text-base sm:text-lg font-bold text-amber-950">Buat Postingan Baru (Slider IG)</h2>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="openLogoUploadModal()" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1">
-            <i class="fa-solid fa-image"></i> Ganti Logo
-          </button>
-          <button onclick="logoutAdmin()" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg transition">
-            Keluar Admin
-          </button>
-        </div>
-      </div>
-
-      <form id="uploadForm" onsubmit="handlePostUpload(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pilih Beberapa Foto/Video Sekaligus</label>
-          <input type="file" id="mediaFileInput" accept="image/*,video/*" multiple required class="w-full text-xs text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-800 file:text-white hover:file:bg-emerald-900 cursor-pointer border border-amber-200 rounded-xl bg-white p-2">
-          <p class="text-[11px] text-gray-500 mt-1">*Pilih banyak foto sekaligus agar tergabung menjadi 1 postingan slide ala Instagram.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Judul Kegiatan</label>
-            <input type="text" id="postTitle" placeholder="Contoh: Malang Youth Day 2026" required class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-800 outline-none">
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kategori Kegiatan</label>
-            <select id="postCategory" class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-800 outline-none bg-white">
-              <option value="Misa & Ibadah">Misa & Ibadah</option>
-              <option value="Retret & Rekoleksi">Retret & Rekoleksi</option>
-              <option value="Bakti Sosial">Bakti Sosial</option>
-              <option value="Latihan Koor">Latihan Koor</option>
-              <option value="Olahraga & Kebersamaan">Olahraga & Kebersamaan</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Deskripsi Kegiatan</label>
-          <textarea id="postDescription" rows="3" placeholder="Ceritakan momen seru kegiatan ini..." class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-800 outline-none"></textarea>
-        </div>
-
-        <button type="submit" id="btnSubmitPost" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-amber-300 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2">
-          <i class="fa-solid fa-paper-plane"></i> Publikasikan Postingan
-        </button>
-      </form>
-    </div>
 
     <!-- TAB 1: GALERI -->
     <div id="sectionGallery" class="space-y-6">
@@ -142,7 +84,7 @@
             <i class="fa-solid fa-camera"></i> Dokumentasi Resmi OMK
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-200 leading-tight">
-            Galeri Kenangan &<br>Keakraban OMK Lumajang
+            Galeri Kenangan &<br>Keakraban OMK
           </h2>
           <p class="text-emerald-100/90 text-xs sm:text-sm max-w-lg leading-relaxed">
             Merekam rekam jejak sukacita, misa muda-mudi, latihan, dan pengabdian Orang Muda Katolik Paroki Maria Ratu Damai Lumajang.
@@ -158,10 +100,10 @@
         </div>
 
         <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-          <button onclick="setFilter('all')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-emerald-800 text-white">Semua</button>
-          <button onclick="setFilter('Misa & Ibadah')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Misa</button>
-          <button onclick="setFilter('Retret & Rekoleksi')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Retret</button>
-          <button onclick="setFilter('Bakti Sosial')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Baksos</button>
+          <button id="btnFilterAll" onclick="setFilter('all')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-emerald-800 text-white">Semua</button>
+          <button id="btnFilterMisa" onclick="setFilter('Misa & Ibadah')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Misa</button>
+          <button id="btnFilterRetret" onclick="setFilter('Retret & Rekoleksi')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Retret</button>
+          <button id="btnFilterBaksos" onclick="setFilter('Bakti Sosial')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-gray-200">Baksos</button>
         </div>
       </div>
 
@@ -264,46 +206,6 @@
 
   </main>
 
-  <!-- MODAL LOGIN ADMIN -->
-  <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative">
-      <button onclick="closeAdminAuth()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-
-      <div class="text-center mb-5">
-        <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
-          <i class="fa-solid fa-key"></i>
-        </div>
-        <h3 class="text-lg font-bold text-gray-900">Akses Admin HP</h3>
-        <p class="text-xs text-gray-500 mt-1">Masukkan PIN Rahasia untuk mengunggah postingan.</p>
-      </div>
-
-      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-        <div>
-          <input type="password" id="adminPinInput" placeholder="Masukkan PIN" required class="w-full text-center tracking-widest text-lg py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-800 outline-none">
-        </div>
-        <button type="submit" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-amber-300 font-bold text-xs rounded-xl transition shadow">
-          Verifikasi & Masuk
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL UPLOAD LOGO -->
-  <div id="logoModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative">
-      <button onclick="closeLogoUploadModal()" class="absolute top-4 right-4 text-gray-400">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 class="text-base font-bold text-gray-900 mb-3">Ganti Logo OMK</h3>
-      <form onsubmit="handleLogoChange(event)" class="space-y-4">
-        <input type="file" id="logoFileInput" accept="image/*" required class="w-full text-xs text-gray-600 border border-gray-200 rounded-xl p-2">
-        <button type="submit" class="w-full py-2 bg-emerald-800 text-amber-300 font-bold text-xs rounded-xl">Simpan Logo</button>
-      </form>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer class="bg-emerald-950 text-emerald-200 py-6 border-t border-emerald-900 text-xs mt-auto">
     <div class="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
@@ -318,24 +220,21 @@
   <!-- Swiper.js Script -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- SCRIPT APLIKASI -->
+  <!-- SCRIPT APLIKASI STATIS (GITHUB PAGES) -->
   <script>
-    const ADMIN_PIN = "317";
-    let isAdminLoggedIn = false;
-    let db;
+    let allPostsData = [];
 
-    function initDB() {
-      const request = indexedDB.open("OMKSwiperPostsDB_v2", 1);
-      request.onupgradeneeded = function(e) {
-        db = e.target.result;
-        if (!db.objectStoreNames.contains("posts")) {
-          db.createObjectStore("posts", { keyPath: "id", autoIncrement: true });
-        }
-      };
-      request.onsuccess = function(e) {
-        db = e.target.result;
-        loadPostsList();
-      };
+    // Mengambil data postingan dari file posts.json di GitHub Repository
+    async function loadPostsList() {
+      try {
+        const response = await fetch('posts.json');
+        if (!response.ok) throw new Error("File posts.json tidak ditemukan");
+        allPostsData = await response.json();
+        renderPostsFeed(allPostsData);
+      } catch (err) {
+        console.error("Gagal membaca data posts.json:", err);
+        document.getElementById('emptyState').classList.remove('hidden');
+      }
     }
 
     function switchTab(tab) {
@@ -357,103 +256,7 @@
       }
     }
 
-    function openAdminAuth() {
-      if (isAdminLoggedIn) {
-        document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
-      } else {
-        document.getElementById('adminModal').classList.remove('hidden');
-      }
-    }
-
-    function closeAdminAuth() {
-      document.getElementById('adminModal').classList.add('hidden');
-      document.getElementById('adminPinInput').value = "";
-    }
-
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      const pin = document.getElementById('adminPinInput').value;
-      if (pin === ADMIN_PIN) {
-        isAdminLoggedIn = true;
-        closeAdminAuth();
-        document.getElementById('adminPanel').classList.remove('hidden');
-        document.getElementById('adminLockIcon').className = "fa-solid fa-lock-open text-amber-300";
-        alert("Login Admin Berhasil!");
-        loadPostsList();
-      } else {
-        alert("PIN Admin Salah!");
-      }
-    }
-
-    function logoutAdmin() {
-      isAdminLoggedIn = false;
-      document.getElementById('adminPanel').classList.add('hidden');
-      document.getElementById('adminLockIcon').className = "fa-solid fa-lock text-sm";
-      loadPostsList();
-    }
-
-    function handlePostUpload(e) {
-      e.preventDefault();
-      if (!db) return;
-
-      const files = document.getElementById('mediaFileInput').files;
-      const title = document.getElementById('postTitle').value;
-      const category = document.getElementById('postCategory').value;
-      const description = document.getElementById('postDescription').value;
-
-      if (files.length === 0) return;
-
-      const mediaItems = [];
-      let readCount = 0;
-
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function(event) {
-          mediaItems.push({
-            type: file.type.startsWith('video') ? 'video' : 'image',
-            src: event.target.result
-          });
-
-          readCount++;
-          if (readCount === files.length) {
-            const postObj = {
-              title: title,
-              category: category,
-              description: description,
-              media: mediaItems,
-              date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-            };
-
-            const tx = db.transaction("posts", "readwrite");
-            tx.objectStore("posts").add(postObj);
-
-            tx.oncomplete = function() {
-              alert("Postingan berhasil dipublikasikan!");
-              document.getElementById('uploadForm').reset();
-              loadPostsList();
-            };
-          }
-        };
-
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function loadPostsList() {
-      if (!db) return;
-      const tx = db.transaction("posts", "readonly");
-      const store = tx.objectStore("posts");
-      const request = store.getAll();
-
-      request.onsuccess = function() {
-        const posts = request.result;
-        renderPostsFeed(posts);
-      };
-    }
-
-    // RENDER FEED DENGAN AUTOHIETAING & ASPEK RASIO ASLI FOTO
+    // RENDER FEED SWIPER SLIDER
     function renderPostsFeed(posts) {
       const feed = document.getElementById('postsFeed');
       const emptyState = document.getElementById('emptyState');
@@ -465,40 +268,36 @@
       }
       emptyState.classList.add('hidden');
 
-      posts.reverse().forEach(post => {
+      posts.slice().reverse().forEach(post => {
         const card = document.createElement('div');
         card.className = "bg-white rounded-2xl overflow-hidden border border-gray-200/90 shadow-sm";
 
-        const totalMedia = post.media.length;
+        const totalMedia = post.media ? post.media.length : 0;
 
-        // Render Slides tanpa memotong rasio asli foto
         let slidesHtml = "";
-        post.media.forEach(item => {
-          if (item.type === 'video') {
-            slidesHtml += `
-              <div class="swiper-slide bg-black">
-                <video src="${item.src}" controls class="w-full h-auto block"></video>
-              </div>`;
-          } else {
-            slidesHtml += `
-              <div class="swiper-slide bg-gray-50">
-                <img src="${item.src}" alt="${post.title}" class="w-full h-auto block object-contain">
-              </div>`;
-          }
-        });
-
-        let deleteBtn = isAdminLoggedIn
-          ? `<button onclick="deletePost(${post.id})" class="text-rose-600 hover:text-rose-800 text-xs font-semibold flex items-center gap-1"><i class="fa-solid fa-trash"></i> Hapus Post</button>`
-          : ``;
+        if (post.media && totalMedia > 0) {
+          post.media.forEach(item => {
+            if (item.type === 'video') {
+              slidesHtml += `
+                <div class="swiper-slide bg-black">
+                  <video src="${item.src}" controls class="w-full h-auto block"></video>
+                </div>`;
+            } else {
+              slidesHtml += `
+                <div class="swiper-slide bg-gray-50">
+                  <img src="${item.src}" alt="${post.title}" class="w-full h-auto block object-contain">
+                </div>`;
+            }
+          });
+        }
 
         card.innerHTML = `
           <!-- Header Card Post -->
           <div class="p-3.5 flex items-center justify-between border-b border-gray-100">
             <div>
-              <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-900 rounded-full text-[10px] font-bold uppercase tracking-wider">${post.category}</span>
-              <p class="text-[10px] text-gray-400 mt-1">${post.date}</p>
+              <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-900 rounded-full text-[10px] font-bold uppercase tracking-wider">${post.category || 'Kegiatan'}</span>
+              <p class="text-[10px] text-gray-400 mt-1">${post.date || ''}</p>
             </div>
-            ${deleteBtn}
           </div>
 
           <!-- Swiper Slider Container -->
@@ -524,17 +323,17 @@
 
           <!-- Deskripsi & Judul Postingan -->
           <div class="p-4 space-y-2">
-            <h3 class="font-bold text-gray-900 text-base leading-snug">${post.title}</h3>
+            <h3 class="font-bold text-gray-900 text-base leading-snug">${post.title || ''}</h3>
             <p class="text-xs text-gray-600 leading-relaxed whitespace-pre-line">${post.description || ''}</p>
           </div>
         `;
 
         feed.appendChild(card);
 
-        // Inisialisasi Swiper dengan autoHeight: true agar kontainer mengikuti tinggi foto asli
+        // Inisialisasi Swiper Slider Auto Height
         setTimeout(() => {
           new Swiper(`.mySwiper-${post.id}`, {
-            autoHeight: true, // Otomatis menyesuaikan tinggi foto secara sempurna
+            autoHeight: true,
             spaceBetween: 0,
             pagination: {
               el: `.mySwiper-${post.id} .swiper-pagination`,
@@ -557,76 +356,26 @@
       });
     }
 
-    function deletePost(id) {
-      if (!confirm("Apakah Anda yakin ingin menghapus postingan ini?")) return;
-      const tx = db.transaction("posts", "readwrite");
-      tx.objectStore("posts").delete(id);
-      tx.oncomplete = function() {
-        loadPostsList();
-      };
-    }
-
-    function openLogoUploadModal() {
-      document.getElementById('logoModal').classList.remove('hidden');
-    }
-
-    function closeLogoUploadModal() {
-      document.getElementById('logoModal').classList.add('hidden');
-    }
-
-    function handleLogoChange(e) {
-      e.preventDefault();
-      const file = document.getElementById('logoFileInput').files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        localStorage.setItem('omk_custom_logo', event.target.result);
-        applyCustomLogo();
-        closeLogoUploadModal();
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function applyCustomLogo() {
-      const savedLogo = localStorage.getItem('omk_custom_logo');
-      if (savedLogo) {
-        document.getElementById('navLogoImg').src = savedLogo;
-      }
-    }
-
     function setFilter(cat) {
-      if (!db) return;
-      const tx = db.transaction("posts", "readonly");
-      const request = tx.objectStore("posts").getAll();
-
-      request.onsuccess = function() {
-        let items = request.result;
-        if (cat !== 'all') {
-          items = items.filter(i => i.category === cat);
-        }
-        renderPostsFeed(items);
-      };
+      if (cat === 'all') {
+        renderPostsFeed(allPostsData);
+      } else {
+        const filtered = allPostsData.filter(i => i.category === cat);
+        renderPostsFeed(filtered);
+      }
     }
 
     function filterPosts() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      if (!db) return;
-      const tx = db.transaction("posts", "readonly");
-      const request = tx.objectStore("posts").getAll();
-
-      request.onsuccess = function() {
-        let items = request.result.filter(i => 
-          i.title.toLowerCase().includes(query) || 
-          (i.description && i.description.toLowerCase().includes(query))
-        );
-        renderPostsFeed(items);
-      };
+      const filtered = allPostsData.filter(i => 
+        (i.title && i.title.toLowerCase().includes(query)) || 
+        (i.description && i.description.toLowerCase().includes(query))
+      );
+      renderPostsFeed(filtered);
     }
 
     window.onload = function() {
-      initDB();
-      applyCustomLogo();
+      loadPostsList();
     };
   </script>
 </body>
