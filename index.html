@@ -19,7 +19,6 @@
     }
     .bg-omk-green { background-color: #1b3b2b; }
     
-    /* Style Swiper agar menyesuaikan tinggi gambar secara otomatis (Auto Height) */
     .swiper-slide {
       height: auto !important;
       display: flex;
@@ -67,12 +66,40 @@
             <i class="fa-solid fa-cross mr-1"></i><span>Santo Ignatius</span>
           </button>
         </nav>
+
+        <!-- TOMBOL ADMIN HP -->
+        <button id="btnAdminTrigger" onclick="openAdminAuth()" class="p-2 bg-emerald-900 hover:bg-emerald-800 text-amber-300 rounded-xl transition border border-emerald-700/50 flex items-center gap-1 text-xs font-semibold" title="Akses Admin HP">
+          <i id="adminLockIcon" class="fa-solid fa-lock text-sm"></i>
+          <span id="adminStatusText" class="hidden md:inline">Admin</span>
+        </button>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTAINER -->
   <main class="flex-grow max-w-2xl w-full mx-auto px-3 sm:px-4 py-6">
+
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel" class="hidden mb-8 bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-6 shadow-lg">
+      <div class="flex items-center justify-between border-b border-amber-200 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider">Mode Admin HP</span>
+          <h2 class="text-base sm:text-lg font-bold text-amber-950">Kelola Postingan Web</h2>
+        </div>
+        <button onclick="logoutAdmin()" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg transition">
+          Keluar Admin
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-amber-950">
+        <p class="font-bold">Langkah Cepat Upload Foto ke Web OMK:</p>
+        <ol class="list-decimal pl-4 space-y-1.5 text-gray-700">
+          <li>Upload foto-foto kegiatan ke GitHub repository via menu <b>Upload files</b>.</li>
+          <li>Edit atau buat file <b>posts.json</b> di GitHub dengan memasukkan nama-nama file foto yang baru kamu upload.</li>
+          <li>Refresh halaman web ini, postingan foto langsung otomatis tampil untuk semua orang!</li>
+        </ol>
+      </div>
+    </div>
 
     <!-- TAB 1: GALERI -->
     <div id="sectionGallery" class="space-y-6">
@@ -206,6 +233,32 @@
 
   </main>
 
+  <!-- MODAL LOGIN ADMIN -->
+  <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative">
+      <button onclick="closeAdminAuth()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
+          <i class="fa-solid fa-key"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900">Akses Admin HP</h3>
+        <p class="text-xs text-gray-500 mt-1">Masukkan PIN Rahasia Admin.</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <input type="password" id="adminPinInput" placeholder="Masukkan PIN" required class="w-full text-center tracking-widest text-lg py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-800 outline-none">
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-amber-300 font-bold text-xs rounded-xl transition shadow">
+          Verifikasi & Masuk
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bg-emerald-950 text-emerald-200 py-6 border-t border-emerald-900 text-xs mt-auto">
     <div class="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
@@ -220,11 +273,12 @@
   <!-- Swiper.js Script -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- SCRIPT APLIKASI STATIS (GITHUB PAGES) -->
+  <!-- SCRIPT APLIKASI -->
   <script>
+    const ADMIN_PIN = "317";
+    let isAdminLoggedIn = false;
     let allPostsData = [];
 
-    // Mengambil data postingan dari file posts.json di GitHub Repository
     async function loadPostsList() {
       try {
         const response = await fetch('posts.json');
@@ -256,7 +310,39 @@
       }
     }
 
-    // RENDER FEED SWIPER SLIDER
+    function openAdminAuth() {
+      if (isAdminLoggedIn) {
+        document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        document.getElementById('adminModal').classList.remove('hidden');
+      }
+    }
+
+    function closeAdminAuth() {
+      document.getElementById('adminModal').classList.add('hidden');
+      document.getElementById('adminPinInput').value = "";
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pin = document.getElementById('adminPinInput').value;
+      if (pin === ADMIN_PIN) {
+        isAdminLoggedIn = true;
+        closeAdminAuth();
+        document.getElementById('adminPanel').classList.remove('hidden');
+        document.getElementById('adminLockIcon').className = "fa-solid fa-lock-open text-amber-300";
+        alert("Login Admin Berhasil!");
+      } else {
+        alert("PIN Admin Salah!");
+      }
+    }
+
+    function logoutAdmin() {
+      isAdminLoggedIn = false;
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('adminLockIcon').className = "fa-solid fa-lock text-sm";
+    }
+
     function renderPostsFeed(posts) {
       const feed = document.getElementById('postsFeed');
       const emptyState = document.getElementById('emptyState');
@@ -292,7 +378,6 @@
         }
 
         card.innerHTML = `
-          <!-- Header Card Post -->
           <div class="p-3.5 flex items-center justify-between border-b border-gray-100">
             <div>
               <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-900 rounded-full text-[10px] font-bold uppercase tracking-wider">${post.category || 'Kegiatan'}</span>
@@ -300,7 +385,6 @@
             </div>
           </div>
 
-          <!-- Swiper Slider Container -->
           <div class="relative group">
             <div class="swiper mySwiper-${post.id} w-full">
               <div class="swiper-wrapper">
@@ -321,7 +405,6 @@
             ` : ''}
           </div>
 
-          <!-- Deskripsi & Judul Postingan -->
           <div class="p-4 space-y-2">
             <h3 class="font-bold text-gray-900 text-base leading-snug">${post.title || ''}</h3>
             <p class="text-xs text-gray-600 leading-relaxed whitespace-pre-line">${post.description || ''}</p>
@@ -330,7 +413,6 @@
 
         feed.appendChild(card);
 
-        // Inisialisasi Swiper Slider Auto Height
         setTimeout(() => {
           new Swiper(`.mySwiper-${post.id}`, {
             autoHeight: true,
